@@ -20,6 +20,8 @@ noC.adicionarFilhoDireita(noE);
 noC.adicionarFilhoEsquerda(noD);
 
 
+console.log("Busca em pré ordem");
+arvore.buscarPPreOrdem();
 
-console.log(arvore);
-console.log(noC);
+console.log("Busca em ordem");
+arvore.buscarPEmOrdem();
