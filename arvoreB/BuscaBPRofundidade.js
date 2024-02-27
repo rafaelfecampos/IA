@@ -18,6 +18,17 @@ class BuscaBProfundidade{
         this.emOrdem(no.filhoDireita);
     }
 
+    static posOrdem(no){
+        if(!no){
+            return;
+        }
+
+        this.posOrdem(no.filhoEsquerda);
+        this.posOrdem(no.filhoDireita);
+        console.log(no.valor);
+
+    }
+
     
 }
 

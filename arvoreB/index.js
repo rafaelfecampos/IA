@@ -1,9 +1,10 @@
 import Arvore from "./Arvore.js";
 import No from "./No.js";
 
+
 let arvore = new Arvore('A');
 
-console.log(arvore);
+// console.log(arvore);
 
 let noA = arvore.raiz;
 let noB = new No('B');
@@ -25,3 +26,9 @@ arvore.buscarPPreOrdem();
 
 console.log("Busca em ordem");
 arvore.buscarPEmOrdem();
+
+console.log("Busca em pós ordem");
+arvore.buscarPPosOrdem();
+
+console.log("Busca em largura");
+arvore.buscarL();
