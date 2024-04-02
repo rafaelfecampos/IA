@@ -1,3 +1,4 @@
+import Grafo from "./Grafo.js";
 import Vertice from "./Vertice.js";
 
 
@@ -24,7 +25,9 @@ let d = new Vertice("d",8.3);
 let e = new Vertice("e",6.4);
 let f = new Vertice("f",4.7);
 let g = new Vertice("g",2.5);
-let t = new Vertice("t");
+let t = new Vertice("t",null);
+
+let grafo = new Grafo(s,t);
 
 s.adicionarAresta(d,4.9);
 s.adicionarAresta(a,3.1);
@@ -36,4 +39,6 @@ c.adicionarAresta(t,4.8);
 f.adicionarAresta(g,2.2);
 g.adicionarAresta(t,2.5);
 
-console.log(b.getOrdenados());
+let caminho = grafo.buscaAestrela();
+
+console.log(caminho.imprimeCaminho(), caminho.retornaCustoTotal());
