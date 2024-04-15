@@ -1,16 +1,28 @@
+function f(x) {
+    return 0.3*x ;
+}
+
 class Point{
     x = 0;
     y = 0;
     label = 0;
+    bias = 1;
 
     constructor(x,y){
         this.x = x;
         this.y = y;
         this.label = this.getLabel();
+        this.bias = 1;
     }
 
     getLabel(){
-        return (this.x > this.y)? 1 : -1;
+        let lineY = f(this.x);
+        if(this.y > lineY){
+            return 1;
+        }else{
+            return-1;
+        }
+        // return (this.x > this.y)? 1 : -1;
     }
 
     getPixelX(){

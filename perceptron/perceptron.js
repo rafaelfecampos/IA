@@ -33,5 +33,12 @@ class Perceptron{
         return num >= 0 ? 1 : -1;
     }
 
+    guessY(x){
+        let w0 = this.weights[0];
+        let w1 = this.weights[1];
+        let w2 = this.weights[2];
+
+        return -(w2/w1) - (w0/w1) * x;
+    }
 
 }
