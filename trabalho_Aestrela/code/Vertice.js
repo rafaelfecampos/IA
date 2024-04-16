@@ -1,16 +1,16 @@
 import Aresta from "./Aresta.js";
 
 export default class Vertice{
-    valor="";
+    ponto = "";
     heuristica = null;
-    adjacentes=[];
+    adjacentes = [];
 
-    constructor(valor, heuristica){
-        this.valor = valor;
+    constructor(ponto, heuristica){
+        this.ponto = ponto;
         this.heuristica = heuristica;
     }
 
-    adicionarAresta(destino, peso){
+    addAresta(destino, peso){
         this.adjacentes.push(new Aresta(this, destino, peso));
     }
 
@@ -20,9 +20,7 @@ export default class Vertice{
             if(aresta.destino == vertice){
                 arestaEncontrada = aresta;
             }
-        })
+        });
         return arestaEncontrada;
     }
-
-   
 }
