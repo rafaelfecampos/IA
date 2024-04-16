@@ -1,7 +1,9 @@
 
 let perceptron;
 
-let points = new Array(100);
+let points = new Array(50);
+let trainning = true; //flag para verificar necessidade de treinamento
+let accuracy = 0.98;
 
 function setup(){
     createCanvas(550,550);
@@ -33,8 +35,11 @@ function draw(){
     });
 
     drawLine();
-    trainSinglePoint();
 
+
+    if(trainning){
+        trainSinglePoint();
+    }
 }
 
 function drawLine(){
@@ -58,5 +63,9 @@ function trainSinglePoint(){
     trainningIndex++;
     if(trainningIndex == points.length){
         trainningIndex = 0;
-    };
+    }
+    if(perceptron.consecutiveHints >= (points.length*accuracy)){
+        // console.log(perceptron.consecutivesHints);
+        trainning = false;
+    }
 }

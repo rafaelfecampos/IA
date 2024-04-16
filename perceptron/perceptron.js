@@ -2,6 +2,7 @@
 class Perceptron{
     weights = [];
     lr = 0.1;
+    consecutiveHints = 0; //variavel de acertos consecutivos
 
     constructor(numberWeigths){
         this.weights = new Array(numberWeigths)
@@ -16,13 +17,20 @@ class Perceptron{
         for(let i = 0;  i < this.weights.length; i++){
             this.weights[i] += error * input[i]*this.lr;
         }
+        if(error == 0){
+            this.consecutivesHints++;
+            console.log(this.consecutivesHints);
+        }else{
+            this.consecutivesHints = 0;
+        }
+        
     }
 
-    guess(inputs){
+    guess(input){
         let sum = 0;
 
         for(let i = 0; i < this.weights.length; i++){
-            sum += inputs[i] * this.weights[i];
+            sum += input[i] * this.weights[i];
         }
         const output = this.sign(sum);
         
