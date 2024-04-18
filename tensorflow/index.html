@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <script>
+        //cria o conjunto de treinamento
+        const xs = tf.tensor([0,1,2,3,4]); //valores do eixo x
+        const ys = xs.mul(1.2).add(5); //valores do eixo y
+
+        //define o modelo de regressão linear
+        const model = tf.sequential();
+        model.add(tf.layers.dense({ units:1, inputShape:[1]})); //units: 1 - uma unidade por vez na entrada \\ inputShape - define a forma da entrada(vetor unidimensional)
+
+        //especifica a função de perda e o otimizador
+        model.compile({loss: 'meanSquaredError', optmizer:'sg'});
+
+        //treina o modelo
+        model.fit(xs, ys, {epochs:500}).then(() => { //epochs define o numero de vezes que o modelo vai passar pelo treinamento
+            myFunction();
+        });//quando o modelo terminar de ser treinado, a função myFunction é chamada
+
+        //Usa o modelo
+        function myFunction(){
+            const xMax = 10;
+            const xArr = [];
+            const yArr = [];
+            for(let x = 0; x <= xMax; x++){
+                let result = model.predict(tf.tensor([Number(x)]));
+                result.data().then(y => { //data pega o resultado(y) e depois(then) adiciona x e y nos seus respectivos arrays
+                    xArr.push(x);
+                    yArr.push(Number(y));
+                    if(x == xMax){
+                        plot(xArr, yArr);
+                    }
+                });
+            }
+        }
+
+        //plota os dados na tela
+        function plot(xArr, yArr){
+
+            const data = [{
+                x:xArr, y:yArr, mode:"markers", type:"scatter"
+            }];
+
+            const layout = {
+                xaxis: {
+                    range: [0,10]
+                },
+                yaxis:{
+                    range: [0,20]
+                },
+            };
+
+            Plotly.newPlot("tensor", data, layout);
+        }
+    </script>
+
+    <div id="tensor"></div>
+</body>
+</html>
