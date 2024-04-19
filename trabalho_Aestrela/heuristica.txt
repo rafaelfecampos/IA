@@ -1,0 +1,32 @@
+Levando em conta que o custo das arestas é o tempo estimado de deslocamento entre os vértices,
+a heurística admissivel escolhida é a seguinte:
+    -Sabendo que a velocidade máxima em vias arteriais é 60 km/h, em vias coletoras é 40km/h
+    e em vias locais é 30km/h (fonte: artigo 61 do capítulo III do Código de Trânsito Brasileiro)
+    e sabendo que as possíveis vias percorridas de carro do ponto inicial (minha casa) até o
+    ponto de destino (Insituto Vianna Júnior) podem ser somente esses tres tipos de via, foi
+    escolhido a média da velocidade máxima nessas vias;
+    -Média da velocidade máxima: (60km/h + 40km/h + 30 km/h)/3 = 43,4 km/h = 0,72 km/min;
+    -Assim, a heurística admissivel escolhida foi o tempo estimado gasto se houvesse uma linha
+    reta entre os vértices até o ponto de destino, pontanto:
+        h(n): heurística
+        dist = distancia em linha reta até o destino
+        v = média da velocidade maxima
+        h(n) = dist / v
+        h(n) = dist / (43,4km/h)
+
+
+*as distancias em linha reta foram medidas através da ferramenta régua do Google Maps
+
+heurísticas:
+    -h(A) =  3,8 km / (0,72 km/min) = 5,28 min
+    -h(B) =  3,7 km / (0,72 km/min) = 5,13 min
+    -h(C) =  4,0 km / (0,72 km/min) = 5,56 min
+    -h(D) =  1,6 km / (0,72 km/min) = 2,22 min
+    -h(E) =  1,6 km / (0,72 km/min) = 2,22 min
+    -h(F) =  1,6 km / (0,72 km/min) = 2,22 min
+    -h(G) =  0,84 km / (0,72 km/min) = 1,17 min
+    -h(H) =  0,293 km / (0,72 km/min) = 0,41 min
+    -h(I) =  0,758 km / (0,72 km/min) = 1,05 min
+
+
+    

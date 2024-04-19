@@ -3,6 +3,10 @@ export default class FilaAbertos{
 
     adicionar(rastreador){
         this.elementos.push(rastreador);
+        this.ordenaFila();
+    }
+
+    ordenaFila(){
         this.elementos.sort((a,b)=>{
             if(a.retornaCustoTotal() < b.retornaCustoTotal()){
                 return -1;
@@ -10,9 +14,8 @@ export default class FilaAbertos{
                 return 1;
             }
             return 0
-        })
+        });
     }
-
     retirarPrimeiro(){
         return this.elementos.shift();
     }
@@ -31,7 +34,7 @@ export default class FilaAbertos{
 
 
 
-    substituiRastrador(rastreadorAntigo, rastreadorNovo){
+    substituirRastreador(rastreadorAntigo, rastreadorNovo){
         let indiceAntigo = this.elementos.indexOf(rastreadorAntigo);
         this.elementos[indiceAntigo] = rastreadorNovo;
         this.ordenaFila();

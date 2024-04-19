@@ -42,6 +42,7 @@ export default class Grafo{
         atual = abertos.retirarPrimeiro();
         while(atual != null){
         if(atual.vertice == this.meta){
+            console.log(atual);
             return atual;
         }else{
             fechados.set(atual.vertice.valor, atual);
@@ -53,8 +54,8 @@ export default class Grafo{
                 if(!rastreadorAntigo){
                     abertos.adicionar(rastreadorNovo);
                 }else{
-                if(rastradorAntigo.retornaCustoTotal() > rastreadorNovo.retornaCustoTotal()){
-                    abertos.substituirRastreador(rastradorAntigo,rastreadorNovo)
+                if(rastreadorAntigo.retornaCustoTotal() > rastreadorNovo.retornaCustoTotal()){
+                    abertos.substituirRastreador(rastreadorAntigo,rastreadorNovo)
                 } 
                 }
             }
