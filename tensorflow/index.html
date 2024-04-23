@@ -10,15 +10,15 @@
 <body>
     <script>
         //cria o conjunto de treinamento
-        const xs = tf.tensor([0,1,2,3,4]); //valores do eixo x
-        const ys = xs.mul(1.2).add(5); //valores do eixo y
+        const xs = tf.tensor([1, 4, 5, 6, 7, 8]); //valores do eixo x
+        const ys = xs.mul(0.5).add(0.7); //valores do eixo y
 
         //define o modelo de regressão linear
         const model = tf.sequential();
         model.add(tf.layers.dense({ units:1, inputShape:[1]})); //units: 1 - uma unidade por vez na entrada \\ inputShape - define a forma da entrada(vetor unidimensional)
 
         //especifica a função de perda e o otimizador
-        model.compile({loss: 'meanSquaredError', optmizer:'sg'});
+        model.compile({loss: 'meanSquaredError', optimizer:'sgd'});
 
         //treina o modelo
         model.fit(xs, ys, {epochs:500}).then(() => { //epochs define o numero de vezes que o modelo vai passar pelo treinamento
