@@ -1,0 +1,93 @@
+NEURÔNIO ARTIFICAL:
+-unidade simples de processamento que recebe uma ou mais entradas e produz uma saida;
+-Recebe um ENTRADA;
+	->Entrada: associada a um PESO que modifica a FORÇA de cada entrada.
+-O processamento feito no neurônio artificial é a soma de todas as ENTRADAS e do cálculo da SAÍDA que sera trasmitida.
+
+BIAS
+-Entrada extra, conhecida também como Viés;
+-Possui valor 1.
+
+MÉTODOS DE TREINAMENTO
+-Treinamento supervisionado
+	.Há exemplos de saída desejada;
+	.A aplicação compara a saída desejada com a encontrada e ajusta os pesos que controlam a rede;
+	.Conjunto de treinamento: conjunto de exemplos de saída desejada;
+	.A rede é treinada com o conjunto de treinamento até que nao ocorram mais erros ou que o percentual de erros esteja dentro do aceitável.
+
+-Treinamento não supervisionado
+	.São fornecidas somente entradas;
+	.Auto-organização ou adaptação: o sistema tem que decidir quais características serão utilizadas para agrupar os dados de entrada.
+
+PERCEPTRON
+-Rede neural que usa treinamento supervisionado;
+-Primeira parte do processamento é indicada pela variável net (função do calculo que faz o processamento dos dados);
+-O treinamento é feito alterando os valores dos pesos W à partir do ERRO da rede;
+-O ERRO é calculado como a diferença entre a saída desejada pela saída do neurônio:
+	.ERRO = yDesejado - yCalculado
+-PESO:
+	W = W + n*ERRO*x
+	.n é a taxa de aprendizado (varia entre 0,1), controla a velocidade em que os pesos serão ajustados a cada passo do treinamento (valores baixos demoram mais e valores altos podem causar oscilações - a vida não é um morango, sempre tem um contra);
+
+
+PROBLEMA DE FILHO DA PUTA RESOLVER
+-Receber duas entradas (inputs): x1 e x2;
+-Processar as entradas e retornar uma saída y;
+-Saída deve corresponder a uma classe;
+-Problema de CLASSIFICAÇÃO DE PONTOS;
+
+->Algoritmo:
+	-Um ponto é representado por cordenadas x e y no plano cartesiano;
+	-Cada coordenada possui dois numeros, indicando a posição no eixo X e no eixo Y;
+	-Assim, um ponto é representado por dois números x e y;
+	-Entradas: pontos(x,y);
+	-Saída: número que represente se o ponto pertence ao grupo acima ou abaixo da linha;
+	-Em caso de erro será informado o valor para ter um auto ajuste de valores;
+	-Em caso de acerto também será informado, para ter como referência o reajuste;
+
+->Prática:
+	Componentes:
+		-Entradas x e y;
+		-Pesos weightX e weightY:
+			.Servem para pesar as entradas;
+			.Passíveis de ajuste conforme o resultado e feedback do programa.
+	Algoritmo do Perceptron:
+		-Formula: y = x0*w0 + x1*w1;
+		-Função de ativação: sign(num):
+			.if(n >= 0 ) return +1
+			.else retutn -1;
+		-Pesos inicializados randomicamente com valores entre 0 e 1;
+	Passo a Passo:
+		1- Criar em um pasta 4 arquivos:
+			.index.html;
+			.sketch.js, é onde irá rodar o programa: incialização de variáveis, main();
+			.perceptron.js, é onde está o código do perceptron;
+			.point.js, é a reperesentação lógica do ponto no plano cartesiano.
+		2-Após criar e codar os arquivos index.html, sketch.js e perceptron.js é hora de preparar o programa para teste:
+			.dataset: massa de dados;
+			.dataset terá uma série de pontos, já com label (já saberemos a classificação correta);
+			.passar o dataset para o perceptron classificar com o guess().
+			.utilzando a bibliteca p5.js só precisamos declarar dois métodos:
+				*setup(): inicializações de variáveis;
+				*draw(): manipula as variáveis e desenha na tela.
+		3-Após testar, temos que dar o feedback para o perceptron e treinar o programa:
+			.Temos que informar o erro:
+				*erro = saida desejada - saida advinhada;
+			.Para isso, temos que ajustar os pesos para encontrar os pesos ideais:
+				*w0 = error * x0;
+			.É necessário:
+				*1-Prover ao perceptron inputs que já é sabido a resposta;
+				*2-Perguntar ao perceptron a resposta;
+				*3-Verificar se acertou ou não;
+				*4-Ajustar o weights de acordo com o erro;
+				*5-Retornar ao primeiro passo e repetir;
+		4-Adição do bias(viés):
+			.tem o valor de 1;
+			.tem peso.
+			.o bias no perceptron (bias = b):
+				y = w1/w2 * x + b
+		5-Criar linha de vizualização do perceptron
+		
+			
+
+

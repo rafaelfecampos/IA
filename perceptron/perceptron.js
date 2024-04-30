@@ -19,7 +19,7 @@ class Perceptron{
         }
         if(error == 0){
             this.consecutivesHints++;
-            console.log(this.consecutivesHints);
+            // console.log(this.consecutivesHints);
         }else{
             this.consecutivesHints = 0;
         }
