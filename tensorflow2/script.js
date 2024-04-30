@@ -35,24 +35,34 @@ async function run(){
     const tensorData = convertToTensor(data);
     const {inputs, labels} = tensorData;
 
-    await trainMode(model, inputs, labels);
+    await trainModel(model, inputs, labels);
     console.log("treino completo");
+
+    testModel(model, data, tensorData);
 }
-document.addEventListener('DOMContentLoaded',run)
+// document.addEventListener('DOMContentLoaded',run)
 
 function createModel(){
     //cria um modelo sequenial
     const model = tf.sequential();
 
     //adiciona uma unica camada de entrada
-    model.add(tf.layers.dense({inputShape: [1], units: 1, userBias: true}))
+    model.add(tf.layers.dense({inputShape: [1], units: 1, useBias: true}))
 
     //adiciona uma camada de saida
-    model.add(tf.layers.dense({units: 1, userBias: true}))
+    model.add(tf.layers.dense({units: 1, useBias: true}))
 
     return model;
 
 }
+//cria modelo
+const model = createModel();
+
+
+//exibe modelo
+tfvis.show.modelSummary({name: "Modelo"},model);
+
+document.addEventListener("DOMContentLoaded", run);
 
 //converter os dados de entrada em tensores que podemos usar para o ML.Tambem faremos os embaralhamento e a normalização 
 //dos dados MPG no eixo y
@@ -60,13 +70,13 @@ function convertToTensor(data){
 
     return tf.tidy(()=>{
         //embaralha os dados
-        tf.util.shuffle(data)
+        tf.util.shuffle(data);
         //converta os dafos em tensor
         const inputs = data.map((d) => d.horsepower);
         const labels = data.map((d) => d.mpg);
 
         const inputTensor = tf.tensor2d(inputs, [inputs.length, 1]);
-        const labelTensor = tf.tensor2d(inputs, [inputs.length, 1]);
+        const labelTensor = tf.tensor2d(labels, [labels.length, 1]);
 
         //retorna os limites maximo e minimo
         const inputMax = inputTensor.max();
@@ -91,22 +101,14 @@ function convertToTensor(data){
     });
     
 }
-//cria modelo
-const model = createModel();
-
-
-//exibe modelo
-tfvis.show.modelSummary({name: "Modelo"},model);
-
-document.addEventListener("DOMContentLoaded", run);
 
 
 //modelo de treinamento
-async function trainMode(model, inputs, labels){
+async function trainModel(model, inputs, labels){
     model.compile({
         optimizer: tf.train.adam(),
         loss: tf.losses.meanSquaredError, //verifica quais estao errados
-        metric: ["mse"],
+        metric: ["mse"]
     });
 
     const batchSize = 32; //tamanho do lote, mostra quantos pontos serao passados por treino
@@ -122,6 +124,41 @@ async function trainMode(model, inputs, labels){
             {height: 200, callbacks: ["onEpochEnd"]}
             ),
     });
+}
 
+function testModel(model, inputData, normalizationData){
+    const {inputMax, inputMin, labelMax, labelMin} = normalizationData;
 
+    const [xs, preds] = tf.tidy(() =>{
+        const xs = tf.linspace(0, 1, 100);
+        const preds = model.predict(xs.reshape([100,1]));
+
+        const unNormXs = xs.mul(inputMax.sub(inputMin)).add(inputMin);
+
+        const unNormPreds = preds.mul(labelMax.sub(labelMin)).add(labelMin);
+
+        return [unNormXs.dataSync(), unNormPreds.dataSync()];
+    });
+
+    const predictedPoints = Array.from(xs).map((val, i) => {
+        return {x: val, y: preds[i]};
+    });
+
+    const originalPoints = inputData.map( d => ({
+        x: d.horsepower,
+        y: d.mpg,
+    }));
+
+    tfvis.render.scatterplot(
+        { name: "Previsoes do modelo x dados originais"},
+        {
+            values: [originalPoints, predictedPoints],
+            series: ["original", "predicted"],
+        },
+        {
+            xLabel: "HorsePower",
+            yLabel: "MPG",
+            height: 300
+        }
+    )
 }
