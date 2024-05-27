@@ -6,7 +6,7 @@ const pitch_type = require('./pitch_type');
 const { Socket } = require('dgram');
 
 const TIMEOUT_BETWEEN_EPOCHS_MS = 500;
-const PORT = 8001;
+const PORT = 8787;
 
 //função para esperar por um determando ms
 
@@ -32,8 +32,8 @@ async function run() {
     let numTrainingIterations = 10;
 
     for(let i = 0; i< numTrainingIterations; i++){
-        console.log(`Training #${i+1}`/${numTrainingIterations});
-        await pitch_type.model.fitDataset(pitch_type.trainingData, {epochs: 1});
+        console.log(`Training #${i+1}/${numTrainingIterations}`);
+        await pitch_type.model.fitDataset(pitch_type.trainingData, {epochs: 1});//fitDataSet treina o modelo
         await sleep(TIMEOUT_BETWEEN_EPOCHS_MS);
     }
 
