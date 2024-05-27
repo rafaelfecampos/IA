@@ -44,16 +44,16 @@ async function run(){
 
 function createModel(){
     //cria um modelo sequenial
-    const model = tf.sequential();
+   const model = tf.sequential();
+   //adiciona uma unica camada de entrada
+   model.add(tf.layers.dense({inputShape: [1], units: 50, userBias: true}))
 
-    //adiciona uma unica camada de entrada
-    model.add(tf.layers.dense({inputShape: [1], units: 1, useBias: true}))
+   model.add(tf.layers.dense({units:50, activation:'sigmoid'}))
+   //adiciona uma camada de saida
+   model.add(tf.layers.dense({units:1, useBias: true}));
 
-    //adiciona uma camada de saida
-    model.add(tf.layers.dense({units: 1, useBias: true}))
 
-    return model;
-
+   return model;
 }
 //cria modelo
 const model = createModel();
